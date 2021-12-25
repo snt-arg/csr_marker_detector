@@ -23,8 +23,8 @@ def __init__():
             frameDest = cv.flip(frameDest, 1)
             # Align images
             frameSourceReg, homography = alignImages(frameSource, frameDest)
-            print("Estimated homography : \n", homography)
-            # frame = cv.subtract(frameSourceReg, frameDest)
+            logger(f"Estimated homography for {frameId}:\n {homography}")
+            frame = cv.subtract(frameSourceReg, frameDest)
             frame = cv.hconcat((frameDest, frameSourceReg))
             # Add text showing the frameId
             cv.putText(frame, frameId, (10, 10),
