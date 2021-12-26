@@ -13,21 +13,21 @@ def __init__():
     logger('Framework started!')
     # Iterate over all cameraLeft frames
     try:
-        for frameLAdd in glob(f'{cameraLeftFrames}/*.jpg')[:5]:
+        for frameLAdd in glob(f'{cameraLeftFrames}/*.jpg')[:10]:
             frameId = os.path.basename(frameLAdd)
             frameRAdd = cameraRightFrames + '\\' + frameId
             # Load content
-            frameDest = cv.imread(frameRAdd, cv.IMREAD_COLOR)
-            frameSource = cv.imread(frameLAdd, cv.IMREAD_COLOR)
+            frameR = cv.imread(frameRAdd, cv.IMREAD_COLOR)
+            frameL = cv.imread(frameLAdd, cv.IMREAD_COLOR)
             # Flip the destination frame
-            frameDest = cv.flip(frameDest, 1)
+            frameR = cv.flip(frameR, 1)
             # Align images
-            frameSourceReg, homography = alignImages(frameSource, frameDest)
+            frameLReg, homography = alignImages(frameL, frameR)
             logger(f"Estimated homography for {frameId}:\n {homography}")
-            frame = cv.subtract(frameSourceReg, frameDest)
-            frame = cv.hconcat((frameDest, frameSourceReg))
+            frame = cv.subtract(frameLReg, frameR)
+            # frame = cv.hconcat((frameR, frameLReg))
             # Add text showing the frameId
-            cv.putText(frame, frameId, (10, 10),
+            cv.putText(frame, frameId, (10, 20),
                        cv.FONT_HERSHEY_PLAIN, 1, (255, 255, 255), 1, 2)
             cv.imshow('Frames', frame)
             cv.waitKey(0)

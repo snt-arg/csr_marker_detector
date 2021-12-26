@@ -3,28 +3,28 @@ import numpy as np
 from config import maxFeatures, goodMatchPercentage
 
 
-def alignImages(frameSource, frameDest):
+def alignImages(frameL, frameR):
     """
     Aligns two images using ORB features and descriptors.
 
     Parameters
     ----------
-    frameSource: numpy.ndarray
+    frameL: numpy.ndarray
         Frame obtained from the left camera
-    frameDest: numpy.ndarray
+    frameR: numpy.ndarray
         Frame obtained from the right camera
     """
     # Convert images to grayscale
-    frameDestGray = cv.cvtColor(frameSource, cv.COLOR_BGR2GRAY)
-    frameSourceGray = cv.cvtColor(frameDest, cv.COLOR_BGR2GRAY)
+    frameLGray = cv.cvtColor(frameR, cv.COLOR_BGR2GRAY)
+    frameRGray = cv.cvtColor(frameL, cv.COLOR_BGR2GRAY)
     # Detect ORB features and compute descriptors
     orb = cv.ORB_create(maxFeatures)
-    keypointsS, descriptorsS = orb.detectAndCompute(frameSourceGray, None)
-    keypointsD, descriptorsD = orb.detectAndCompute(frameDestGray, None)
+    keypointsL, descriptorsL = orb.detectAndCompute(frameLGray, None)
+    keypointsR, descriptorsR = orb.detectAndCompute(frameRGray, None)
     # Match features
     descriptorMatcher = cv.DescriptorMatcher_create(
         cv.DESCRIPTOR_MATCHER_BRUTEFORCE_HAMMING)
-    matches = descriptorMatcher.match(descriptorsS, descriptorsD, None)
+    matches = descriptorMatcher.match(descriptorsL, descriptorsR, None)
     # Sort matches by score
     matches.sort(key=lambda x: x.distance, reverse=False)
     # Remove improper matches
@@ -32,18 +32,19 @@ def alignImages(frameSource, frameDest):
     matches = matches[:bestMatchesLength]
     # Draw top matches
     imMatches = cv.drawMatches(
-        frameSource, keypointsS, frameDest, keypointsD, matches, None)
+        frameL, keypointsL, frameR, keypointsR, matches, None)
     cv.imwrite("matches.jpg", imMatches)
     # Extract location of good matches
-    pointsS = np.zeros((len(matches), 2), dtype=np.float32)
-    pointsD = np.zeros((len(matches), 2), dtype=np.float32)
+    pointsL = np.zeros((len(matches), 2), dtype=np.float32)
+    pointsR = np.zeros((len(matches), 2), dtype=np.float32)
+    # Iterate over matches
     for index, match in enumerate(matches):
-        pointsS[index, :] = keypointsS[match.queryIdx].pt
-        pointsD[index, :] = keypointsD[match.trainIdx].pt
+        pointsL[index, :] = keypointsL[match.queryIdx].pt
+        pointsR[index, :] = keypointsR[match.trainIdx].pt
     # Find and use homography
-    homography, mask = cv.findHomography(pointsS, pointsD, cv.RANSAC)
-    height, width, channels = frameDest.shape
+    homography, mask = cv.findHomography(pointsL, pointsR, cv.RANSAC)
+    height, width, channels = frameR.shape
     # Create registered image for L
-    frameSourceReg = cv.warpPerspective(
-        frameSource, homography, (width, height))
-    return frameSourceReg, homography
+    frameLReg = cv.warpPerspective(
+        frameL, homography, (width, height))
+    return frameLReg, homography
