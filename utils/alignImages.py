@@ -15,8 +15,8 @@ def alignImages(frameL, frameR):
         Frame obtained from the right camera
     """
     # Convert images to grayscale
-    frameLGray = cv.cvtColor(frameR, cv.COLOR_BGR2GRAY)
-    frameRGray = cv.cvtColor(frameL, cv.COLOR_BGR2GRAY)
+    frameRGray = cv.cvtColor(frameR, cv.COLOR_BGR2GRAY)
+    frameLGray = cv.cvtColor(frameL, cv.COLOR_BGR2GRAY)
     # Detect ORB features and compute descriptors
     orb = cv.ORB_create(maxFeatures)
     keypointsL, descriptorsL = orb.detectAndCompute(frameLGray, None)
