@@ -4,6 +4,7 @@ import cv2 as cv
 from glob import glob
 from utils.logger import logger
 from utils.alignImages import alignImages
+from utils.postProcessing import postProcessing
 from config import cameraLeftFrames, cameraRightFrames
 
 
@@ -13,7 +14,7 @@ def __init__():
     logger('Framework started!')
     # Iterate over all cameraLeft frames
     try:
-        for frameLAdd in glob(f'{cameraLeftFrames}/*.jpg')[:10]:
+        for frameLAdd in glob(f'{cameraLeftFrames}/*.jpg')[:5]:
             frameId = os.path.basename(frameLAdd)
             frameRAdd = cameraRightFrames + '\\' + frameId
             # Load content
@@ -26,6 +27,8 @@ def __init__():
             logger(f"Estimated homography for {frameId}:\n {homography}")
             frame = cv.subtract(frameLReg, frameR)
             # frame = cv.hconcat((frameR, frameLReg))
+            # Post-processing
+            postProcessing(frame)
             # Add text showing the frameId
             cv.putText(frame, frameId, (10, 20),
                        cv.FONT_HERSHEY_PLAIN, 1, (255, 255, 255), 1, 2)

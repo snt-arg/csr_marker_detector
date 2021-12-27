@@ -31,9 +31,9 @@ def alignImages(frameL, frameR):
     bestMatchesLength = int(len(matches) * goodMatchPercentage)
     matches = matches[:bestMatchesLength]
     # Draw top matches
-    imMatches = cv.drawMatches(
-        frameL, keypointsL, frameR, keypointsR, matches, None)
-    cv.imwrite("matches.jpg", imMatches)
+    # imMatches = cv.drawMatches(
+    #     frameL, keypointsL, frameR, keypointsR, matches, None)
+    # cv.imwrite("matches.jpg", imMatches)
     # Extract location of good matches
     pointsL = np.zeros((len(matches), 2), dtype=np.float32)
     pointsR = np.zeros((len(matches), 2), dtype=np.float32)
@@ -44,7 +44,7 @@ def alignImages(frameL, frameR):
     # Find and use homography
     homography, mask = cv.findHomography(pointsL, pointsR, cv.RANSAC)
     height, width, channels = frameR.shape
-    # Create registered image for L
+    # Create registered image for left camera frame
     frameLReg = cv.warpPerspective(
         frameL, homography, (width, height))
     return frameLReg, homography
