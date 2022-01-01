@@ -1,6 +1,10 @@
 cameraLeftFrames = 'E:\Datasets\Dataset 23 - CSR\Simple Mapping\image_left'
 cameraRightFrames = 'E:\Datasets\Dataset 23 - CSR\Simple Mapping\image_right'
 
-# ORB Image Alignment
+# Image Alignment
 maxFeatures = 500
 goodMatchPercentage = 0.4
+
+# Post-Processing
+threshold = 10  # Value between 0 and 255
+gaussianBlurKernel = (5, 5)

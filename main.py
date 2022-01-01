@@ -27,8 +27,7 @@ def __init__():
             # logger(f"Estimated homography for {frameId}:\n {homography}")
             frame = cv.subtract(frameLReg, frameR)
             # Post-processing
-            postProcessing(frame)
-            # Bounding-box Drawer
+            frame = postProcessing(frame)
             # Add text showing the frameId
             cv.putText(frame, frameId, (10, 20),
                        cv.FONT_HERSHEY_PLAIN, 1, (255, 255, 255), 1, 2)
@@ -38,10 +37,11 @@ def __init__():
             # Stop in case user presses 'Esc'
             if pressedKey == 27:
                 logger('Framework stopped by user!')
+                cv.destroyAllWindows()
                 break
         # Create a log when finished
         logger('Framework finished!')
-    except KeyboardInterrupt:
+    except Exception:
         cv.destroyAllWindows()
         logger('Framework stopped!')
 
