@@ -26,7 +26,6 @@ def __init__():
             frameLReg, homography = alignImages(frameL, frameR)
             # logger(f"Estimated homography for {frameId}:\n {homography}")
             frame = cv.subtract(frameLReg, frameR)
-            # frame = cv.hconcat((frameR, frameLReg))
             # Post-processing
             postProcessing(frame)
             # Bounding-box Drawer
@@ -36,11 +35,12 @@ def __init__():
             # Show the frames in a window
             cv.imshow('Frames', frame)
             pressedKey = cv.waitKey(1)
-            # Stop, in case user presses 'q' or 'Esc'
+            # Stop in case user presses 'Esc'
             if pressedKey == 27:
+                logger('Framework stopped by user!')
                 break
-            # Finish
-            logger('Framework finished!')
+        # Create a log when finished
+        logger('Framework finished!')
     except KeyboardInterrupt:
         cv.destroyAllWindows()
         logger('Framework stopped!')
