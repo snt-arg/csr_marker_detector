@@ -28,9 +28,12 @@ def __init__():
             frame = cv.subtract(frameLReg, frameR)
             # Post-processing
             frame = postProcessing(frame)
-            # Add text showing the frameId
+            # Add some text to the frame
             cv.putText(frame, frameId, (10, 20),
                        cv.FONT_HERSHEY_PLAIN, 1, (255, 255, 255), 1, 2)
+            height, width, channels = frame.shape
+            cv.putText(frame, '[Esc]: Quit', (10, height - 10),
+                       cv.FONT_HERSHEY_PLAIN, 1, (0, 215, 255), 1, 2)
             # Show the frames in a window
             cv.imshow('Frames', frame)
             pressedKey = cv.waitKey(1)
