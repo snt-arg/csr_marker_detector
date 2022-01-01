@@ -12,3 +12,9 @@ This repository provides a simple tool that requires some basic configurations t
 
 - Python > 3.7
 - OpenCV > 3.4
+
+### 🗹 TODOs
+
+- Remove noises and holes
+- Draw bounding-boxes on the detected item
+- Enable processing videos as input
