@@ -10,11 +10,19 @@ This repository provides a simple tool that requires some basic configurations t
 
 ### 🚀 Env. and Libraries
 
+You will need below libraries to be installed before running the application:
+
 - Python > 3.7
 - OpenCV > 3.4
+- Numpy > 1.19
+
+You can simply run the below command in the root directory:
+
+```python
+pip install -r requirements.txt
+```
 
 ### 🗹 TODOs
 
-- Remove noises and holes
-- Draw bounding-boxes on the detected item
-- Enable processing videos as input
+- [Optional] Draw bounding-boxes on the detected item
+- [Optional] Enable processing videos as input
