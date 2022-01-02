@@ -7,4 +7,5 @@ goodMatchPercentage = 0.4
 
 # Post-Processing
 threshold = 10  # Value between 0 and 255
-gaussianBlurKernel = (5, 5)
+erodeKernelSize = (5, 5)
+gaussianBlurKernelSize = (5, 5)
