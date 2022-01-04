@@ -24,5 +24,7 @@ pip install -r requirements.txt
 
 ### 🗹 TODOs
 
+- Concatenating camera outputs in the final frame
+- Adding a ROI to clear unused parts
+- Enable processing videos as input
 - [Optional] Draw bounding-boxes on the detected item
-- [Optional] Enable processing videos as input
