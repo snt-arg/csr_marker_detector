@@ -5,6 +5,7 @@ from glob import glob
 from utils.logger import logger
 from utils.alignImages import alignImages
 from utils.postProcessing import postProcessing
+from utils.concatImages import imageConcatHorizontal
 from config import cameraLeftFrames, cameraRightFrames
 
 
@@ -28,6 +29,8 @@ def __init__():
             frame = cv.subtract(frameLReg, frameR)
             # Post-processing
             frame = postProcessing(frame)
+            # Concatenate frames
+            frame = imageConcatHorizontal([frameR, frameL, frame])
             # Add some text to the frame
             cv.putText(frame, frameId, (10, 20),
                        cv.FONT_HERSHEY_PLAIN, 1, (255, 255, 255), 1, 2)
