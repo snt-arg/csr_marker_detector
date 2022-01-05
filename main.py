@@ -22,7 +22,7 @@ def __init__():
             frameR = cv.imread(frameRAddr, cv.IMREAD_COLOR)
             frameL = cv.imread(frameLAddr, cv.IMREAD_COLOR)
             # Flip the destination frame
-            frameR = cv.flip(frameR, 1)
+            frameL = cv.flip(frameL, 1)
             # Align images
             frameLReg, homography = alignImages(frameL, frameR)
             # logger(f"Estimated homography for {frameId}:\n {homography}")
