@@ -27,6 +27,9 @@ def alignImages(frameL, frameR):
         descriptorMatcher = cv.DescriptorMatcher_create(
             cv.DESCRIPTOR_MATCHER_BRUTEFORCE_HAMMING)
         matches = descriptorMatcher.match(descriptorsL, descriptorsR, None)
+        # To avoid error when there are no matches
+        if (matches == []):
+            return frameL, []
         # Sort matches by score
         matches.sort(key=lambda x: x.distance, reverse=False)
         # Remove improper matches
