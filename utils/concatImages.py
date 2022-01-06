@@ -1,5 +1,6 @@
 import cv2 as cv
 from config import windowWidth
+from utils.logger import logger
 
 
 def frameResize(image, width=200):
@@ -36,11 +37,15 @@ def imageConcatHorizontal(imageList):
     imageList: list
         List of images to concatenate.
     """
-    numberOfImages = len(imageList)
+    try:
+        numberOfImages = len(imageList)
 
-    # Resizing the images
-    resizedImageList = [frameResize(
-        img, int(windowWidth / numberOfImages)) for img in imageList]
+        # Resizing the images
+        resizedImageList = [frameResize(
+            img, int(windowWidth / numberOfImages)) for img in imageList]
 
-    # Returning the final image
-    return cv.hconcat(resizedImageList)
+        # Returning the final image
+        return cv.hconcat(resizedImageList)
+    except Exception as exception:
+        logger(
+            f'Error occurred in imageConcatHorizontal!\n{exception}', 'error')

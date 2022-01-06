@@ -47,9 +47,9 @@ def __init__():
                 break
         # Create a log when finished
         logger('Framework finished!')
-    except Exception:
+    except Exception as exception:
         cv.destroyAllWindows()
-        logger('Framework stopped!')
+        logger(f'Running failed!\n{exception}', 'error')
 
 
 __init__()
