@@ -6,7 +6,7 @@ from utils.logger import logger
 from utils.alignImages import alignImages
 from utils.postProcessing import postProcessing
 from utils.concatImages import imageConcatHorizontal
-from config import cameraLeftFrames, cameraRightFrames
+from config import cameraLeftFrames, cameraRightFrames, flipImage
 
 
 def __init__():
@@ -22,7 +22,8 @@ def __init__():
             frameR = cv.imread(frameRAddr, cv.IMREAD_COLOR)
             frameL = cv.imread(frameLAddr, cv.IMREAD_COLOR)
             # Flip the destination frame
-            frameL = cv.flip(frameL, 1)
+            if flipImage:
+                frameL = cv.flip(frameL, 1)
             # Align images
             frameLReg, homography = alignImages(frameL, frameR)
             # logger(f"Estimated homography for {frameId}:\n {homography}")

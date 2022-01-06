@@ -26,6 +26,6 @@ pip install -r requirements.txt
 
 - Improve image denoising
 - Provide B&W output
-- Enable processing videos as input
-- [Optional] Adding a ROI to clear unused parts
+- Adding a ROI to clear unused parts
+- [Optional] Enable processing videos as input
 - [Optional] Draw bounding-boxes on the detected item
