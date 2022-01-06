@@ -27,14 +27,14 @@ def alignImages(frameL, frameR):
         descriptorMatcher = cv.DescriptorMatcher_create(
             cv.DESCRIPTOR_MATCHER_BRUTEFORCE_HAMMING)
         matches = descriptorMatcher.match(descriptorsL, descriptorsR, None)
-        # To avoid error when there are no matches
-        if (matches == []):
-            return frameL, []
         # Sort matches by score
         matches.sort(key=lambda x: x.distance, reverse=False)
         # Remove improper matches
         bestMatchesLength = int(len(matches) * goodMatchPercentage)
         matches = matches[:bestMatchesLength]
+        # To avoid error when there are no matches
+        if (matches == []):
+            return frameL, []
         # Draw top matches
         # imMatches = cv.drawMatches(
         #     frameL, keypointsL, frameR, keypointsR, matches, None)
@@ -48,7 +48,7 @@ def alignImages(frameL, frameR):
             pointsR[index, :] = keypointsR[match.trainIdx].pt
         # Find and use homography
         homography, mask = cv.findHomography(pointsL, pointsR, cv.RANSAC)
-        height, width, channels = frameR.shape
+        height, width = frameR.shape[:2]
         # Create registered image for left camera frame
         frameLReg = cv.warpPerspective(
             frameL, homography, (width, height))

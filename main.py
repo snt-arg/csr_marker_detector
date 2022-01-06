@@ -35,7 +35,7 @@ def __init__():
             # Add some text to the frame
             cv.putText(frame, frameId, (10, 20),
                        cv.FONT_HERSHEY_PLAIN, 1, (255, 255, 255), 1, 2)
-            height, width, channels = frame.shape
+            height = frame.shape[0]
             cv.putText(frame, '[Esc]: Quit', (10, height - 10),
                        cv.FONT_HERSHEY_PLAIN, 1, (0, 215, 255), 1, 2)
             # Show the frames in a window

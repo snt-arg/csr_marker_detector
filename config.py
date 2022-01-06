@@ -12,5 +12,5 @@ roiCoverage = (0.5, 1)  # Percentage of the frame to be used as ROI (h, w)
 
 # Post-Processing
 threshold = 10  # Value between 0 and 255
-erodeKernelSize = (5, 5)
+erodeKernelSize = (9, 9)
 gaussianBlurKernelSize = (5, 5)
