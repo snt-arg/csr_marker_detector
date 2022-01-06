@@ -1,5 +1,6 @@
 import cv2 as cv
 from utils.logger import logger
+from utils.filterROI import filterROI
 from config import threshold, gaussianBlurKernelSize, erodeKernelSize
 
 
@@ -19,6 +20,8 @@ def postProcessing(frame):
         frameGray = cv.GaussianBlur(frameGray, gaussianBlurKernelSize, 0)
         _, mask = cv.threshold(frameGray, threshold, 255,
                                cv.THRESH_BINARY + cv.THRESH_OTSU)
+        # Apply region of interest
+        mask = filterROI(frameGray, mask)
         # Apply morphological operations
         erodeKernel = cv.getStructuringElement(cv.MORPH_RECT, erodeKernelSize)
         mask = cv.morphologyEx(mask, cv.MORPH_ERODE, erodeKernel)
