@@ -1,6 +1,6 @@
 import cv2 as cv
 from utils.logger import logger
-from utils.filterROI import filterROI
+from utils.filterROI import applyCircularMask
 from config import threshold, gaussianBlurKernelSize, erodeKernelSize
 
 
@@ -21,7 +21,7 @@ def postProcessing(frame):
         _, mask = cv.threshold(frameGray, threshold, 255,
                                cv.THRESH_BINARY + cv.THRESH_OTSU)
         # Apply region of interest
-        # mask = filterROI(frameGray, mask)
+        mask = applyCircularMask(mask)
         # Apply morphological operations
         erodeKernel = cv.getStructuringElement(cv.MORPH_RECT, erodeKernelSize)
         mask = cv.morphologyEx(mask, cv.MORPH_ERODE, erodeKernel)
