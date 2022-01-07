@@ -27,9 +27,7 @@ def postProcessing(frame):
         mask = cv.morphologyEx(mask, cv.MORPH_ERODE, erodeKernel)
         # Create updated frame
         # result = cv.bitwise_and(frame, frame, mask=mask)
-        # Invert the mask
-        processedMask = cv.bitwise_not(mask)
-        processedMask = cv.cvtColor(processedMask, cv.COLOR_GRAY2BGR)
+        processedMask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
         return processedMask
     except Exception as exception:
         logger(f'Error occurred in postProcessing!\n{exception}', 'error')
