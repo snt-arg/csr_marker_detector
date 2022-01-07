@@ -6,7 +6,7 @@ from utils.logger import logger
 from utils.alignImages import alignImages
 from utils.postProcessing import postProcessing
 from utils.concatImages import imageConcatHorizontal
-from config import cameraLeftFrames, cameraRightFrames, flipImage
+from config import cameraLeftFrames, cameraRightFrames
 
 def __init__():
     # Creating log file
@@ -15,14 +15,12 @@ def __init__():
     # Iterate over all cameraLeft frames
     capR = cv.VideoCapture(2)
     capL = cv.VideoCapture(4)
-    frameId = 1
     while True:
         # Capture frame-by-frame
         retL, frameL = capL.read()
         retR, frameR = capR.read()
         # Flip the destination frame
-        if flipImage:
-            frameR = cv.flip(frameR, 1) 
+        frameR = cv.flip(frameR, 1) 
         # if frame is read correctly ret is True
         if not retR or not retL:
             print("Can't receive frame (stream end?). Exiting ...")
