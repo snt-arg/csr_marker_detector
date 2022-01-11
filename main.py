@@ -6,7 +6,7 @@ from utils.logger import logger
 from utils.alignImages import alignImages
 from utils.postProcessing import postProcessing
 from utils.concatImages import imageConcatHorizontal
-from config import cameraLeftFrames, cameraRightFrames, flipImage
+from config import cameraLeftFrames, cameraRightFrames, flipImage, enableBitwiseAnd
 
 
 def __init__():
@@ -27,7 +27,8 @@ def __init__():
             # Align images
             frameLReg, homography = alignImages(frameL, frameR)
             # logger(f"Estimated homography for {frameId}:\n {homography}")
-            frame = cv.subtract(frameLReg, frameR)
+            frame = cv.bitwise_and(
+                frameLReg, frameR) if enableBitwiseAnd else cv.subtract(frameLReg, frameR)
             # Post-processing
             frame = postProcessing(frame)
             # Concatenate frames

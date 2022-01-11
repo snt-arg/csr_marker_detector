@@ -1,8 +1,9 @@
-cameraLeftFrames = 'E:\Datasets\Dataset 23 - CSR\Sample2\image_left'
-cameraRightFrames = 'E:\Datasets\Dataset 23 - CSR\Sample2\image_right'
+cameraLeftFrames = 'E:\Datasets\Dataset 23 - CSR\Sample8\image_left'
+cameraRightFrames = 'E:\Datasets\Dataset 23 - CSR\Sample8\image_right'
 
 # Shown window
 windowWidth = 1500
+enableBitwiseAnd = False
 
 # Image Alignment
 flipImage = False  # Flip one of the input camera's frame

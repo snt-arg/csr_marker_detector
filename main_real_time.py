@@ -1,12 +1,11 @@
-import os
 import logging
 import cv2 as cv
-from glob import glob
 from utils.logger import logger
+from config import enableBitwiseAnd
 from utils.alignImages import alignImages
 from utils.postProcessing import postProcessing
 from utils.concatImages import imageConcatHorizontal
-from config import cameraLeftFrames, cameraRightFrames
+
 
 def __init__():
     # Creating log file
@@ -20,7 +19,7 @@ def __init__():
         retL, frameL = capL.read()
         retR, frameR = capR.read()
         # Flip the destination frame
-        frameR = cv.flip(frameR, 1) 
+        frameR = cv.flip(frameR, 1)
         # if frame is read correctly ret is True
         if not retR or not retL:
             print("Can't receive frame (stream end?). Exiting ...")
@@ -30,12 +29,12 @@ def __init__():
         #fourcc = cv.VideoWriter_fourcc(*'XVID')
         #out = cv.VideoWriter('output.avi', fourcc, 20.0, (640, 480))
 
-
         try:
             # Align images
             frameLReg, homography = alignImages(frameL, frameR)
             # logger(f"Estimated homography for {frameId}:\n {homography}")
-            frame = cv.subtract(frameLReg, frameR)
+            frame = cv.bitwise_and(
+                frameLReg, frameR) if enableBitwiseAnd else cv.subtract(frameLReg, frameR)
             # Post-processing
             frame = postProcessing(frame)
             # Concatenate frames
@@ -50,11 +49,12 @@ def __init__():
         if cv.waitKey(1) == ord('q'):
             break
 
-        #if cv.waitKey(1) == ord('s'):
-        #    out.write(frame) 
+        # if cv.waitKey(1) == ord('s'):
+        #    out.write(frame)
         # When everything done, release the capture
     capL.release()
     capR.release()
     cv.destroyAllWindows()
+
 
 __init__()
