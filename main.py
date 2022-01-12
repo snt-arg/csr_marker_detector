@@ -25,10 +25,11 @@ def __init__():
             if flipImage:
                 frameR = cv.flip(frameR, 1)
             # Align images
-            frameLReg, homography = alignImages(frameL, frameR)
-            # logger(f"Estimated homography for {frameId}:\n {homography}")
-            frame = cv.bitwise_and(
-                frameLReg, frameR) if enableBitwiseAnd else cv.subtract(frameLReg, frameR)
+            frameLReg = alignImages(frameL, frameR)
+            frame = cv.subtract(frameLReg, frameR)
+            # Check if bitwise and is enabled
+            if enableBitwiseAnd:
+                frame = cv.bitwise_and(frameLReg, frameR)
             # Post-processing
             frame = postProcessing(frame)
             # Concatenate frames

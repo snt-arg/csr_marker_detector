@@ -11,9 +11,10 @@ def __init__():
     # Creating log file
     logging.basicConfig(filename='logger.log', level=logging.INFO)
     logger('Framework started!')
-    # Iterate over all cameraLeft frames
+    # Define video capture
     capR = cv.VideoCapture(2)
     capL = cv.VideoCapture(4)
+    # Iterate over all camera frames
     while True:
         # Capture frame-by-frame
         retL, frameL = capL.read()

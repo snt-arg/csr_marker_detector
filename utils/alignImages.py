@@ -35,7 +35,7 @@ def alignImages(frameL, frameR):
         # To avoid error when there are no matches
         # assert matches != [], 'No matches found!'
         if (matches == []):
-            return frameL, []
+            return frameL
         # Draw top matches
         # imMatches = cv.drawMatches(
         #     frameL, keypointsL, frameR, keypointsR, matches, None)
@@ -52,11 +52,11 @@ def alignImages(frameL, frameR):
         # To avoid error when there are no matches
         # assert homography != None, 'No homography found!'
         if (homography is None):
-            return frameL, []
+            return frameL
         height, width = frameR.shape[:2]
         # Create registered image for left camera frame
         frameLReg = cv.warpPerspective(
             frameL, homography, (width, height))
-        return frameLReg, homography
+        return frameLReg
     except Exception as exception:
         logger(f'Error occurred in alignImages!\n{exception}', 'error')

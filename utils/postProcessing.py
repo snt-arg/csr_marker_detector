@@ -26,7 +26,6 @@ def postProcessing(frame):
         erodeKernel = cv.getStructuringElement(cv.MORPH_RECT, erodeKernelSize)
         mask = cv.morphologyEx(mask, cv.MORPH_ERODE, erodeKernel)
         # Create updated frame
-        # result = cv.bitwise_and(frame, frame, mask=mask)
         processedMask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
         return processedMask
     except Exception as exception:
