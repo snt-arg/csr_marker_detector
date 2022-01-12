@@ -27,9 +27,10 @@ def __init__():
             # Align images
             frameLReg = alignImages(frameL, frameR)
             frame = cv.subtract(frameLReg, frameR)
-            # Check if bitwise and is enabled
+            # Check if bitwise_and is enabled
             if enableBitwiseAnd:
-                frame = cv.bitwise_and(frameLReg, frameR)
+                andMask = cv.bitwise_and(frameLReg, frameR)
+                frame = cv.bitwise_not(andMask)
             # Post-processing
             frame = postProcessing(frame)
             # Concatenate frames

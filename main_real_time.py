@@ -32,10 +32,13 @@ def __init__():
 
         try:
             # Align images
-            frameLReg, homography = alignImages(frameL, frameR)
+            frameLReg = alignImages(frameL, frameR)
             # logger(f"Estimated homography for {frameId}:\n {homography}")
-            frame = cv.bitwise_and(
-                frameLReg, frameR) if enableBitwiseAnd else cv.subtract(frameLReg, frameR)
+            frame = cv.subtract(frameLReg, frameR)
+            # Check if bitwise_and is enabled
+            if enableBitwiseAnd:
+                andMask = cv.bitwise_and(frameLReg, frameR)
+                frame = cv.bitwise_not(andMask)
             # Post-processing
             frame = postProcessing(frame)
             # Concatenate frames
