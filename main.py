@@ -5,8 +5,9 @@ from glob import glob
 from utils.logger import logger
 from utils.alignImages import alignImages
 from utils.postProcessing import postProcessing
+from utils.brightnessChange import brighnessChange
 from utils.concatImages import imageConcatHorizontal
-from config import cameraLeftFrames, cameraRightFrames, flipImage, enableBitwiseAnd
+from config import cameraLeftFrames, cameraRightFrames, flipImage, enableBitwiseAnd, brightness
 
 
 def __init__():
@@ -21,6 +22,9 @@ def __init__():
             # Load content
             frameR = cv.imread(frameRAddr, cv.IMREAD_COLOR)
             frameL = cv.imread(frameLAddr, cv.IMREAD_COLOR)
+            # Change brightness
+            frameL = brighnessChange(frameL, brightness['lefCam'])
+            frameR = brighnessChange(frameR, brightness['rightCam'])
             # Flip the destination frame
             if flipImage:
                 frameR = cv.flip(frameR, 1)

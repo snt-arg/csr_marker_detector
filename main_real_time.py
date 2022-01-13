@@ -1,9 +1,10 @@
 import logging
 import cv2 as cv
 from utils.logger import logger
-from config import enableBitwiseAnd
 from utils.alignImages import alignImages
+from config import enableBitwiseAnd, brightness
 from utils.postProcessing import postProcessing
+from utils.brightnessChange import brighnessChange
 from utils.concatImages import imageConcatHorizontal
 
 
@@ -19,6 +20,9 @@ def __init__():
         # Capture frame-by-frame
         retL, frameL = capL.read()
         retR, frameR = capR.read()
+        # Change brightness
+        frameL = brighnessChange(frameL, brightness['lefCam'])
+        frameR = brighnessChange(frameR, brightness['rightCam'])
         # Flip the destination frame
         frameR = cv.flip(frameR, 1)
         # if frame is read correctly ret is True
