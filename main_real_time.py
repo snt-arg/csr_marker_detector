@@ -1,8 +1,8 @@
 import logging
 import cv2 as cv
+from config import brightness
 from utils.logger import logger
 from utils.alignImages import alignImages
-from config import enableBitwiseAnd, brightness
 from utils.postProcessing import postProcessing
 from utils.brightnessChange import brighnessChange
 from utils.concatImages import imageConcatHorizontal
@@ -37,12 +37,8 @@ def __init__():
         try:
             # Align images
             frameLReg = alignImages(frameL, frameR)
-            # logger(f"Estimated homography for {frameId}:\n {homography}")
+            # Frames Subtraction
             frame = cv.subtract(frameLReg, frameR)
-            # Check if bitwise_and is enabled
-            if enableBitwiseAnd:
-                andMask = cv.bitwise_and(frameLReg, frameR)
-                frame = cv.bitwise_not(andMask)
             # Post-processing
             frame = postProcessing(frame)
             # Concatenate frames

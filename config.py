@@ -3,7 +3,6 @@ cameraRightFrames = 'E:\Datasets\Dataset 23 - CSR\Sample6\image_right'
 
 # Shown window
 windowWidth = 1500
-enableBitwiseAnd = False
 # Values for the left and the right camera
 brightness = {'lefCam': 0, 'rightCam': 0}
 

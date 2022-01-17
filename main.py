@@ -7,7 +7,7 @@ from utils.alignImages import alignImages
 from utils.postProcessing import postProcessing
 from utils.brightnessChange import brighnessChange
 from utils.concatImages import imageConcatHorizontal
-from config import cameraLeftFrames, cameraRightFrames, flipImage, enableBitwiseAnd, brightness
+from config import cameraLeftFrames, cameraRightFrames, flipImage, brightness
 
 
 def __init__():
@@ -30,11 +30,8 @@ def __init__():
                 frameR = cv.flip(frameR, 1)
             # Align images
             frameLReg = alignImages(frameL, frameR)
+            # Frames Subtraction
             frame = cv.subtract(frameLReg, frameR)
-            # Check if bitwise_and is enabled
-            if enableBitwiseAnd:
-                andMask = cv.bitwise_and(frameLReg, frameR)
-                frame = cv.bitwise_not(andMask)
             # Post-processing
             frame = postProcessing(frame)
             # Concatenate frames
