@@ -1,5 +1,5 @@
-cameraLeftFrames = 'E:\Datasets\Dataset 23 - CSR\Sample6\image_left'
-cameraRightFrames = 'E:\Datasets\Dataset 23 - CSR\Sample6\image_right'
+cameraLeftFrames = 'E:\Datasets\Dataset 23 - CSR\Sample4\image_left'
+cameraRightFrames = 'E:\Datasets\Dataset 23 - CSR\Sample4\image_right'
 
 # Shown window
 windowWidth = 1500
@@ -12,7 +12,7 @@ maxFeatures = 500
 goodMatchPercentage = 0.4
 circlularMaskCoverage = 0.8  # Value between 0 and 1
 
-# Post-Processing
+# Post-Processing initialize values
 threshold = 10  # Value between 0 and 255
-erodeKernelSize = (9, 9)
-gaussianBlurKernelSize = (5, 5)
+erodeKernelSize = 9  # Value between 1 and 50
+gaussianBlurKernelSize = 5  # Only odd values

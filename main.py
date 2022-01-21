@@ -4,6 +4,7 @@ import cv2 as cv
 from glob import glob
 from utils.logger import logger
 from utils.alignImages import alignImages
+from utils.addTrackbar import addTrackbar
 from utils.postProcessing import postProcessing
 from utils.brightnessChange import brighnessChange
 from utils.concatImages import imageConcatHorizontal
@@ -14,6 +15,8 @@ def __init__():
     # Creating log file
     logging.basicConfig(filename='logger.log', level=logging.INFO)
     logger('Framework started!')
+    # Add trackbar
+    addTrackbar('Frames')
     # Iterate over all cameraLeft frames
     try:
         for frameLAddr in glob(f'{cameraLeftFrames}/*.jpg'):

@@ -24,7 +24,6 @@ pip install -r requirements.txt
 
 ### 🗹 TODOs
 
-- Add trackbars to control configuration variables
 - Improve image alignment in case no matches are found
 - Improve post-processing module
 - Resolve the intense changes issue when there is no keypoints
