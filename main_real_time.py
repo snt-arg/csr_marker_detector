@@ -3,6 +3,7 @@ import cv2 as cv
 from config import brightness
 from utils.logger import logger
 from utils.alignImages import alignImages
+from utils.addTrackbar import addTrackbar
 from utils.postProcessing import postProcessing
 from utils.brightnessChange import brighnessChange
 from utils.concatImages import imageConcatHorizontal
@@ -15,6 +16,8 @@ def __init__():
     # Define video capture
     capR = cv.VideoCapture(2)
     capL = cv.VideoCapture(4)
+    # Add trackbar
+    procParams = addTrackbar('Frames')
     # Iterate over all camera frames
     while True:
         # Capture frame-by-frame
@@ -40,7 +43,7 @@ def __init__():
             # Frames Subtraction
             frame = cv.subtract(frameLReg, frameR)
             # Post-processing
-            frame = postProcessing(frame)
+            frame = postProcessing(frame, procParams)
             # Concatenate frames
             frame = imageConcatHorizontal([frameR, frameL, frame])
             # Show the frames in a window
