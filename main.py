@@ -16,7 +16,7 @@ def __init__():
     logging.basicConfig(filename='logger.log', level=logging.INFO)
     logger('Framework started!')
     # Add trackbar
-    addTrackbar('Frames')
+    procParams = addTrackbar('Frames')
     # Iterate over all cameraLeft frames
     try:
         for frameLAddr in glob(f'{cameraLeftFrames}/*.jpg'):
@@ -36,7 +36,7 @@ def __init__():
             # Frames Subtraction
             frame = cv.subtract(frameLReg, frameR)
             # Post-processing
-            frame = postProcessing(frame)
+            frame = postProcessing(frame, procParams)
             # Concatenate frames
             frame = imageConcatHorizontal([frameR, frameL, frame])
             # Add some text to the frame
