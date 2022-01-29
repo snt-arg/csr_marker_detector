@@ -33,14 +33,14 @@ def alignImages(frameL, frameR):
         # Remove improper matches
         bestMatchesLength = int(len(matches) * goodMatchPercentage)
         matches = matches[:bestMatchesLength]
-        # To avoid error when there are no matches
-        # assert matches != [], 'No matches found!'
+        # When there are no matches, return the original frame
         if (matches == []):
-            return frameL
+            return frameR
         # Draw top matches
         # imMatches = cv.drawMatches(
         #     frameL, keypointsL, frameR, keypointsR, matches, None)
         # cv.imwrite("matches.jpg", imMatches)
+        # cv.imshow('imMatches', imMatches)
         # Extract location of good matches
         pointsL = np.zeros((len(matches), 2), dtype=np.float32)
         pointsR = np.zeros((len(matches), 2), dtype=np.float32)

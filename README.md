@@ -27,4 +27,3 @@ pip install -r requirements.txt
 - Improve image alignment in case no matches are found
 - Improve post-processing module
 - Resolve the intense changes issue when there is no keypoints
-- [Optional] Draw bounding-boxes on the detected item
