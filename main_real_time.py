@@ -15,7 +15,7 @@ def __init__():
     logger('Framework started!')
     # Define video capture
     capR = cv.VideoCapture(2)
-    capL = cv.VideoCapture(4)
+    capL = cv.VideoCapture(1)
     # Add trackbar
     procParams = addTrackbar('Frames')
     # Iterate over all camera frames
@@ -32,10 +32,6 @@ def __init__():
         if not retR or not retL:
             print("Can't receive frame (stream end?). Exiting ...")
             break
-        #cv.imshow('FramesL', frameL)
-        #cv.imshow('FramesR', frameR)
-        #fourcc = cv.VideoWriter_fourcc(*'XVID')
-        #out = cv.VideoWriter('output.avi', fourcc, 20.0, (640, 480))
 
         try:
             # Align images

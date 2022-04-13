@@ -1,5 +1,5 @@
-cameraLeftFrames = 'E:\Datasets\Dataset 23 - CSR\Sample4\image_left'
-cameraRightFrames = 'E:\Datasets\Dataset 23 - CSR\Sample4\image_right'
+cameraLeftFrames = 'E:\Data\Sample4\image_left'
+cameraRightFrames = 'E:\Data\Sample4\image_right'
 
 # Shown window
 windowWidth = 1500

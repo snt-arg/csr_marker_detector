@@ -24,6 +24,7 @@ pip install -r requirements.txt
 
 ### 🗹 TODOs
 
-- Improve image alignment in case no matches are found
-- Improve post-processing module
-- Resolve the intense changes issue when there is no keypoints
+- Work on why the real-time configuration isn't working
+- Having both subtraction matrices
+- Do a both-side subtraction operation
+- For the image hardware, we can use the current set up equipped with a wide-range lens
