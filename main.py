@@ -4,7 +4,7 @@ import PySimpleGUI as sg
 from config import brightness
 from utils.logger import logger
 from vision.processFrames import processFrames
-from utils.brightnessChange import brighnessChange
+from vision.brightnessChange import brighnessChange
 from config import threshold, erodeKernelSize, gaussianBlurKernelSize
 from config import maxFeatures, goodMatchPercentage, circlularMaskCoverage
 

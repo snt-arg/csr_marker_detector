@@ -1,7 +1,7 @@
 import cv2 as cv
 
 
-def brighnessChange(image, value=30):
+def brighnessChange(image, value=40):
     """
     Change the brightness of the given image.
 
