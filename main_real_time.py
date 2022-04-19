@@ -52,9 +52,6 @@ def __init__():
         if cv.waitKey(1) == ord('q'):
             break
 
-        # if cv.waitKey(1) == ord('s'):
-        #    out.write(frame)
-        # When everything done, release the capture
     capL.release()
     capR.release()
     cv.destroyAllWindows()

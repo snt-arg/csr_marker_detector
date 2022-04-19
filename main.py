@@ -1,63 +1,57 @@
-import os
 import logging
 import cv2 as cv
-from glob import glob
+import PySimpleGUI as sg
 from utils.logger import logger
-from utils.alignImages import alignImages
-from utils.addTrackbar import addTrackbar
-from utils.postProcessing import postProcessing
-from utils.brightnessChange import brighnessChange
-from utils.concatImages import imageConcatHorizontal
-from config import cameraLeftFrames, cameraRightFrames, flipImage, brightness
+from config import threshold, erodeKernelSize, gaussianBlurKernelSize
+from config import maxFeatures, goodMatchPercentage, circlularMaskCoverage
 
+# Definitions
+windowTitle = 'CSR Readout'
+tabGeneral = [[sg.Text('Frame Count:', size=(20,1)), sg.Text('N/A')]]
+tabAlignment = [
+    [sg.Text('Flip image?', size=(20,1)),
+        sg.Radio('Already flipped.', "RadFlip", default=True, key="FlipYes"),
+        sg.Radio('Needs flipping', "RadFlip", default=False, key="FlipNo")],
+    [sg.Text('Max. features:', size=(20,1)), sg.Slider((10, 1000), maxFeatures, 10, orientation="h", size=(35, 15), key="MaxFeat")],
+    [sg.Text('Matching rate:', size=(20,1)), sg.Slider((0, 1), goodMatchPercentage, .1, orientation="h", size=(35, 15), key="MatchRate")],
+    [sg.Text('Circular mask:', size=(20,1)), sg.Slider((0, 1), circlularMaskCoverage, .01, orientation="h", size=(35, 15), key="CircMask")]]
+tabPosProcessing = [
+    [sg.Text('Threshold:', size=(20,1)), sg.Slider((1, 255), threshold, 1, orientation="h", size=(35, 15), key="Threshold")],
+    [sg.Text('Erosion kernel:', size=(20,1)), sg.Slider((1, 50), erodeKernelSize, 1, orientation="h", size=(35, 15), key="Erosion")],
+    [sg.Text('Gaussian kernel:', size=(20,1)), sg.Slider((1, 49), gaussianBlurKernelSize, 2, orientation="h", size=(35, 15), key="Gaussian")]]
+tabGroup = [[sg.TabGroup([[sg.Tab('General Settings', tabGeneral), sg.Tab('Alignment Configurations', tabAlignment),
+                    sg.Tab('Post-Processing', tabPosProcessing)]], tab_location='centertop',
+                       title_color='dark slate grey', selected_background_color='dark orange', pad=5)]]
+imageViewer = [sg.Image(filename="", key="Frames")]
 
-def __init__():
+def main():
     # Creating log file
     logging.basicConfig(filename='logger.log', level=logging.INFO)
     logger('Framework started!')
-    # Add trackbar
-    procParams = addTrackbar('Frames')
-    # Iterate over all cameraLeft frames
-    try:
-        for frameLAddr in glob(f'{cameraLeftFrames}/*.jpg'):
-            frameId = os.path.basename(frameLAddr)
-            frameRAddr = cameraRightFrames + '\\' + frameId
-            # Load content
-            frameR = cv.imread(frameRAddr, cv.IMREAD_COLOR)
-            frameL = cv.imread(frameLAddr, cv.IMREAD_COLOR)
-            # Change brightness
-            frameL = brighnessChange(frameL, brightness['lefCam'])
-            frameR = brighnessChange(frameR, brightness['rightCam'])
-            # Flip the destination frame
-            if flipImage:
-                frameR = cv.flip(frameR, 1)
-            # Align images
-            frameLReg = alignImages(frameL, frameR)
-            # Frames Subtraction
-            frame = cv.subtract(frameLReg, frameR)
-            # Post-processing
-            frame = postProcessing(frame, procParams)
-            # Concatenate frames
-            frame = imageConcatHorizontal([frameR, frameL, frame])
-            # Add some text to the frame
-            cv.putText(frame, frameId, (10, 20),
-                       cv.FONT_HERSHEY_PLAIN, 1, (255, 255, 255), 1, 2)
-            height = frame.shape[0]
-            cv.putText(frame, '[Esc]: Quit', (10, height - 10),
-                       cv.FONT_HERSHEY_PLAIN, 1, (0, 215, 255), 1, 2)
-            # Show the frames in a window
-            cv.imshow('Frames', frame)
-            pressedKey = cv.waitKey(1)
-            # Stop in case user presses 'Esc'
-            if pressedKey == 27:
-                logger('Framework stopped by user!')
-                cv.destroyAllWindows()
-                break
-        # Create a log when finished
-        logger('Framework finished!')
-    except Exception as exception:
-        cv.destroyAllWindows()
-        logger(f'Running failed!\n{exception}', 'error')
+    # Create the window
+    window = sg.Window(windowTitle, [tabGroup, imageViewer], location=(800, 400))
+    capture = cv.VideoCapture(0)
 
+    # Create an event loop
+    while True:
+        event, values = window.read(timeout=50)
+        # End program if user closes window
+        if event == "Exit" or event == sg.WIN_CLOSED:
+            break
+        # Retrieve frames
+        ret, frame = capture.read()
+        # Get the values from the GUI
+        guiValues = {'flipImage': values['FlipYes'], 'maxFeatures': values['MaxFeat'],
+                    'goodMatchPercentage': values['MatchRate'], 'circlularMaskCoverage': values['CircMask'],
+                    'threshold': values['Threshold'], 'erosionKernel': values['Erosion'],
+                    'gaussianKernel': values['Gaussian']}
+        # Show the frames
+        frame = cv.imencode(".png", frame)[1].tobytes()
+        window['Frames'].update(data=frame)
+    
+    capture.release()
+    window.close()
+    logger('Framework finished!')
 
-__init__()
+# Run the program
+main()
