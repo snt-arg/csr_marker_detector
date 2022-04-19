@@ -1,5 +1,5 @@
-cameraLeftFrames = 'E:\Data\Sample4\image_left'
-cameraRightFrames = 'E:\Data\Sample4\image_right'
+cameraLeftFrames = '/home/ali/Datasets/Sample4/image_left'
+cameraRightFrames = '/home/ali/Datasets/Sample4/image_right'
 
 # Shown window
 windowWidth = 1500

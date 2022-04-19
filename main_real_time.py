@@ -2,11 +2,11 @@ import logging
 import cv2 as cv
 from config import brightness
 from utils.logger import logger
-from utils.alignImages import alignImages
+from vision.alignImages import alignImages
 from utils.addTrackbar import addTrackbar
-from utils.postProcessing import postProcessing
+from vision.postProcessing import postProcessing
 from utils.brightnessChange import brighnessChange
-from utils.concatImages import imageConcatHorizontal
+from vision.concatImages import imageConcatHorizontal
 
 
 def __init__():
@@ -15,7 +15,7 @@ def __init__():
     logger('Framework started!')
     # Define video capture
     capR = cv.VideoCapture(2)
-    capL = cv.VideoCapture(1)
+    capL = cv.VideoCapture(4)
     # Add trackbar
     procParams = addTrackbar('Frames')
     # Iterate over all camera frames

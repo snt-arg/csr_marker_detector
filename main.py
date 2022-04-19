@@ -1,7 +1,10 @@
 import logging
 import cv2 as cv
 import PySimpleGUI as sg
+from config import brightness
 from utils.logger import logger
+from vision.processFrames import processFrames
+from utils.brightnessChange import brighnessChange
 from config import threshold, erodeKernelSize, gaussianBlurKernelSize
 from config import maxFeatures, goodMatchPercentage, circlularMaskCoverage
 
@@ -30,26 +33,40 @@ def main():
     logger('Framework started!')
     # Create the window
     window = sg.Window(windowTitle, [tabGroup, imageViewer], location=(800, 400))
-    capture = cv.VideoCapture(0)
+    capR = cv.VideoCapture(4)
+    capL = cv.VideoCapture(2)
 
     # Create an event loop
     while True:
-        event, values = window.read(timeout=50)
+        event, values = window.read(timeout=10)
         # End program if user closes window
         if event == "Exit" or event == sg.WIN_CLOSED:
             break
         # Retrieve frames
-        ret, frame = capture.read()
+        retL, frameL = capL.read()
+        retR, frameR = capR.read()
+        # Change brightness
+        frameL = brighnessChange(frameL, brightness['lefCam'])
+        frameR = brighnessChange(frameR, brightness['rightCam'])
+        # If frame is read correctly ret is True
+        if not retR or not retL:
+            logger("Error while reading frames!", 'error')
+            break
+        # 
+        frameR = cv.flip(frameR, 1)
         # Get the values from the GUI
         guiValues = {'flipImage': values['FlipYes'], 'maxFeatures': values['MaxFeat'],
                     'goodMatchPercentage': values['MatchRate'], 'circlularMaskCoverage': values['CircMask'],
                     'threshold': values['Threshold'], 'erosionKernel': values['Erosion'],
                     'gaussianKernel': values['Gaussian']}
+        # Process frames
+        frame = processFrames(frameL, frameR, guiValues)
         # Show the frames
         frame = cv.imencode(".png", frame)[1].tobytes()
         window['Frames'].update(data=frame)
     
-    capture.release()
+    capL.release()
+    capR.release()
     window.close()
     logger('Framework finished!')
 

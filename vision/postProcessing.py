@@ -1,6 +1,6 @@
 import cv2 as cv
 from utils.logger import logger
-from utils.filterROI import applyCircularMask
+from vision.filterROI import applyCircularMask
 
 
 def postProcessing(frame, procParams):
@@ -20,18 +20,18 @@ def postProcessing(frame, procParams):
         Processed frame
     """
     try:
-        # Convert given image to binary
+        # Convert image to grayscale
         frameGray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
         # Apply threshold
         frameGray = cv.GaussianBlur(
-            frameGray, (procParams['gaussianKernel'], procParams['gaussianKernel']), 0)
+            frameGray, (int(procParams['gaussianKernel']), int(procParams['gaussianKernel'])), 0)
         _, mask = cv.threshold(frameGray, procParams['threshold'], 255,
                                cv.THRESH_BINARY + cv.THRESH_OTSU)
         # Apply region of interest
         mask = applyCircularMask(mask)
         # Apply morphological operations
         erodeKernel = cv.getStructuringElement(
-            cv.MORPH_RECT, (procParams['erosionKernel'], procParams['erosionKernel']))
+            cv.MORPH_RECT, (int(procParams['erosionKernel']), int(procParams['erosionKernel'])))
         mask = cv.morphologyEx(mask, cv.MORPH_ERODE, erodeKernel)
         # Create updated frame
         processedMask = cv.cvtColor(mask, cv.COLOR_GRAY2BGR)
