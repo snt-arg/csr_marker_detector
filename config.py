@@ -1,5 +1,5 @@
 # Shown window
-windowWidth = 1500
+windowWidth = 1800
 # Values for the left and the right camera
 brightness = {'lefCam': 0, 'rightCam': 0}
 
