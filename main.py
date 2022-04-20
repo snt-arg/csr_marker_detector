@@ -10,8 +10,8 @@ from config import maxFeatures, goodMatchPercentage, circlularMaskCoverage
 
 # Definitions
 windowTitle = 'CSR Readout Software'
-tabGeneral = [[sg.Text("Left camera brightness:", size=labelSize), sg.Slider((0, 255), brightness['lCam'], 1, orientation="h", size=sliderSize, key="LeftCamBrightness")],
-    [sg.Text("Right camera brightness:", size=labelSize), sg.Slider((0, 255), brightness['rCam'], 1, orientation="h", size=sliderSize, key="RightCamBrightness")]]
+tabGeneral = [[sg.Text("Camera brightness/contrast:", size=labelSize), sg.Slider((1.0, 3.0), brightness['alpha'], .1, orientation="h", size=(50, 15), key="camAlpha"),
+    sg.Slider((0, 50), brightness['beta'], 1, orientation="h", size=(50, 15), key="camBeta")]]
 tabAlignment = [
     [sg.Text('Max. features:', size=labelSize), sg.Slider((10, 1000), maxFeatures, 10, orientation="h", size=sliderSize, key="MaxFeat")],
     [sg.Text('Matching rate:', size=labelSize), sg.Slider((0, 1), goodMatchPercentage, .1, orientation="h", size=sliderSize, key="MatchRate")],
@@ -51,8 +51,8 @@ def main():
                     'circlularMaskCoverage': values['CircMask'], 'threshold': values['Threshold'],
                     'erosionKernel': values['Erosion'], 'gaussianKernel': values['Gaussian']}
         # Change brightness
-        frameL = brighnessChange(frameL, int(values['LeftCamBrightness']))
-        frameR = brighnessChange(frameR, int(values['RightCamBrightness']))
+        frameL = cv.convertScaleAbs(frameL, alpha=values['camAlpha'], beta=values['camBeta'])
+        frameR = cv.convertScaleAbs(frameR, alpha=values['camAlpha'], beta=values['camBeta'])
         # Flipping one of the frames
         frameR = cv.flip(frameR, 1)
         # Process frames

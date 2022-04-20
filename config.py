@@ -8,7 +8,7 @@ windowWidth = 1800
 # Camera ports (0 for internal webcam)
 ports = {'lCam': 1, 'rCam': 2}
 # Values for the left and the right camera
-brightness = {'lCam': 0, 'rCam': 0}
+brightness = {'alpha': 1.0, 'beta': 0}
 
 # Image alignment
 maxFeatures = 500
