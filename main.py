@@ -1,8 +1,8 @@
 import logging
 import cv2 as cv
 import PySimpleGUI as sg
-from config import brightness
 from utils.logger import logger
+from config import ports, brightness
 from vision.processFrames import processFrames
 from vision.brightnessChange import brighnessChange
 from config import threshold, erodeKernelSize, gaussianBlurKernelSize
@@ -30,8 +30,7 @@ def main():
     logger('Framework started!')
     # Create the window
     window = sg.Window(windowTitle, [tabGroup, imageViewer], location=(800, 400))
-    capR = cv.VideoCapture(2)
-    capL = cv.VideoCapture(1)
+    capL, capR = cv.VideoCapture(ports['lCam']), cv.VideoCapture(ports['rCam'])
 
     # Create an event loop
     while True:
@@ -43,8 +42,8 @@ def main():
         retL, frameL = capL.read()
         retR, frameR = capR.read()
         # Change brightness
-        frameL = brighnessChange(frameL, brightness['lefCam'])
-        frameR = brighnessChange(frameR, brightness['rightCam'])
+        frameL = brighnessChange(frameL, brightness['lCam'])
+        frameR = brighnessChange(frameR, brightness['rCam'])
         # If frame is read correctly ret is True
         if not retR or not retL:
             logger("Error while reading frames!", 'error')

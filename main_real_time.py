@@ -24,8 +24,8 @@ def __init__():
         retL, frameL = capL.read()
         retR, frameR = capR.read()
         # Change brightness
-        frameL = brighnessChange(frameL, brightness['lefCam'])
-        frameR = brighnessChange(frameR, brightness['rightCam'])
+        frameL = brighnessChange(frameL, brightness['lCam'])
+        frameR = brighnessChange(frameR, brightness['rCam'])
         # Flip the destination frame
         frameR = cv.flip(frameR, 1)
         # if frame is read correctly ret is True
