@@ -10,7 +10,8 @@ from config import maxFeatures, goodMatchPercentage, circlularMaskCoverage
 
 # Definitions
 windowTitle = 'CSR Readout Software'
-tabGeneral = [[sg.Text('Frame Count:', size=labelSize), sg.Text('N/A')]]
+tabGeneral = [[sg.Text("Left camera brightness:", size=labelSize), sg.Slider((0, 255), brightness['lCam'], 1, orientation="h", size=sliderSize, key="LeftCamBrightness")],
+    [sg.Text("Right camera brightness:", size=labelSize), sg.Slider((0, 255), brightness['rCam'], 1, orientation="h", size=sliderSize, key="RightCamBrightness")]]
 tabAlignment = [
     [sg.Text('Max. features:', size=labelSize), sg.Slider((10, 1000), maxFeatures, 10, orientation="h", size=sliderSize, key="MaxFeat")],
     [sg.Text('Matching rate:', size=labelSize), sg.Slider((0, 1), goodMatchPercentage, .1, orientation="h", size=sliderSize, key="MatchRate")],
@@ -41,19 +42,19 @@ def main():
         # Retrieve frames
         retL, frameL = capL.read()
         retR, frameR = capR.read()
-        # Change brightness
-        frameL = brighnessChange(frameL, brightness['lCam'])
-        frameR = brighnessChange(frameR, brightness['rCam'])
         # If frame is read correctly ret is True
         if not retR or not retL:
             logger("Error while reading frames!", 'error')
             break
-        # Flipping one of the frames
-        frameR = cv.flip(frameR, 1)
         # Get the values from the GUI
         guiValues = {'maxFeatures': values['MaxFeat'], 'goodMatchPercentage': values['MatchRate'],
-                    'circlularMaskCoverage': values['CircMask'], 'threshold': values['Threshold'], 
+                    'circlularMaskCoverage': values['CircMask'], 'threshold': values['Threshold'],
                     'erosionKernel': values['Erosion'], 'gaussianKernel': values['Gaussian']}
+        # Change brightness
+        frameL = brighnessChange(frameL, int(values['LeftCamBrightness']))
+        frameR = brighnessChange(frameR, int(values['RightCamBrightness']))
+        # Flipping one of the frames
+        frameR = cv.flip(frameR, 1)
         # Process frames
         frame = processFrames(frameL, frameR, guiValues)
         # Show the frames

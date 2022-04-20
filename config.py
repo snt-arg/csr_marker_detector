@@ -1,5 +1,6 @@
 # GUI settings
 labelSize = (20,1)
+inputSize = (30,1)
 sliderSize = (100, 15)
 
 # Shown window
