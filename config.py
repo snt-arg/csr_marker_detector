@@ -4,7 +4,6 @@ windowWidth = 1800
 brightness = {'lefCam': 0, 'rightCam': 0}
 
 # Image Alignment
-flipImage = False  # Flip one of the input camera's frame
 maxFeatures = 500
 goodMatchPercentage = 0.4
 circlularMaskCoverage = 0.8  # Value between 0 and 1

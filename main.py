@@ -12,9 +12,6 @@ from config import maxFeatures, goodMatchPercentage, circlularMaskCoverage
 windowTitle = 'CSR Readout Software'
 tabGeneral = [[sg.Text('Frame Count:', size=(20,1)), sg.Text('N/A')]]
 tabAlignment = [
-    [sg.Text('Flip image?', size=(20,1)),
-        sg.Radio('Already flipped.', "RadFlip", default=True, key="FlipYes"),
-        sg.Radio('Needs flipping', "RadFlip", default=False, key="FlipNo")],
     [sg.Text('Max. features:', size=(20,1)), sg.Slider((10, 1000), maxFeatures, 10, orientation="h", size=(100, 15), key="MaxFeat")],
     [sg.Text('Matching rate:', size=(20,1)), sg.Slider((0, 1), goodMatchPercentage, .1, orientation="h", size=(100, 15), key="MatchRate")],
     [sg.Text('Circular mask:', size=(20,1)), sg.Slider((0, 1), circlularMaskCoverage, .01, orientation="h", size=(100, 15), key="CircMask")]]
@@ -33,8 +30,8 @@ def main():
     logger('Framework started!')
     # Create the window
     window = sg.Window(windowTitle, [tabGroup, imageViewer], location=(800, 400))
-    capR = cv.VideoCapture(4)
-    capL = cv.VideoCapture(2)
+    capR = cv.VideoCapture(2)
+    capL = cv.VideoCapture(1)
 
     # Create an event loop
     while True:
@@ -52,13 +49,12 @@ def main():
         if not retR or not retL:
             logger("Error while reading frames!", 'error')
             break
-        # 
+        # Flipping one of the frames
         frameR = cv.flip(frameR, 1)
         # Get the values from the GUI
-        guiValues = {'flipImage': values['FlipYes'], 'maxFeatures': values['MaxFeat'],
-                    'goodMatchPercentage': values['MatchRate'], 'circlularMaskCoverage': values['CircMask'],
-                    'threshold': values['Threshold'], 'erosionKernel': values['Erosion'],
-                    'gaussianKernel': values['Gaussian']}
+        guiValues = {'maxFeatures': values['MaxFeat'], 'goodMatchPercentage': values['MatchRate'],
+                    'circlularMaskCoverage': values['CircMask'], 'threshold': values['Threshold'], 
+                    'erosionKernel': values['Erosion'], 'gaussianKernel': values['Gaussian']}
         # Process frames
         frame = processFrames(frameL, frameR, guiValues)
         # Show the frames
