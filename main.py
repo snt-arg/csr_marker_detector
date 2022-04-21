@@ -3,7 +3,6 @@ import cv2 as cv
 import PySimpleGUI as sg
 from utils.logger import logger
 from vision.processFrames import processFrames
-from vision.brightnessChange import brighnessChange
 from config import ports, brightness, labelSize, sliderSize
 from config import threshold, erodeKernelSize, gaussianBlurKernelSize
 from config import maxFeatures, goodMatchPercentage, circlularMaskCoverage
