@@ -39,12 +39,9 @@ def main():
         if event == "Exit" or event == sg.WIN_CLOSED:
             break
         # Retrieve frames
+        # Note: if each of the cameras not working, retX will be False
         retL, frameL = capL.read()
-        retR, frameR = capR.read()
-        # If frame is read correctly ret is True
-        if not retR or not retL:
-            logger("Error while reading frames!", 'error')
-            break
+        retR, frameR = capR.read()        
         # Get the values from the GUI
         guiValues = {'maxFeatures': values['MaxFeat'], 'goodMatchPercentage': values['MatchRate'],
                     'circlularMaskCoverage': values['CircMask'], 'threshold': values['Threshold'],
@@ -52,10 +49,10 @@ def main():
         # Change brightness
         frameL = cv.convertScaleAbs(frameL, alpha=values['camAlpha'], beta=values['camBeta'])
         frameR = cv.convertScaleAbs(frameR, alpha=values['camAlpha'], beta=values['camBeta'])
-        # Flipping one of the frames
+        # Flip the right frame
         frameR = cv.flip(frameR, 1)
         # Process frames
-        frame = processFrames(frameL, frameR, guiValues)
+        frame = processFrames(frameL, frameR, retL, retR, guiValues)
         # Show the frames
         frame = cv.imencode(".png", frame)[1].tobytes()
         window['Frames'].update(data=frame)

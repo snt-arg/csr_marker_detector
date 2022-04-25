@@ -4,10 +4,36 @@ from vision.alignImages import alignImages
 from vision.postProcessing import postProcessing
 from vision.concatImages import imageConcatHorizontal
 
-def processFrames(frameL, frameR, procParams):
+def processFrames(frameL, frameR, retL, retR, procParams):
+    """
+    Process the frames and return the result
+
+    Parameters
+    ----------
+    frameL : numpy.ndarray
+        Left camera frame
+    frameR : numpy.ndarray
+        Right camera frame
+    retL : bool
+        True if the left camera frame is valid
+    retR : bool
+        True if the right camera frame is valid
+    procParams : dict
+        Dictionary containing the parameters for the processing
+
+    Returns
+    -------
+    frame: numpy.ndarray
+        The processed frame
+    """
     try:
-        # Align images
-        frameLReg = alignImages(frameL, frameR)
+        # Define a notFound image
+        notFoundImage = cv.imread('notFound.png', cv.IMREAD_COLOR)
+        # Retrieve camera frames (and check if they are valid)
+        frameL = frameL if retL else notFoundImage
+        frameR = frameR if retR else notFoundImage
+        # Align images (if both are retrieved, align them, otherwise, return the notFound image)
+        frameLReg = alignImages(frameL, frameR) if (retL and retR) else notFoundImage
         # Frames Subtraction
         frame = cv.subtract(frameLReg, frameR)
         # Post-processing

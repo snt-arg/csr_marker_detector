@@ -6,7 +6,7 @@ sliderSize = (100, 15)
 # Shown window
 windowWidth = 1800
 # Camera ports (0 for internal webcam)
-ports = {'lCam': 1, 'rCam': 2}
+ports = {'lCam': 2, 'rCam': 1}
 # Values for the left and the right camera
 brightness = {'alpha': 1.0, 'beta': 0}
 
