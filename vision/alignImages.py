@@ -36,11 +36,6 @@ def alignImages(frameL, frameR):
         # When there are no matches, return the original frame
         if (matches == []):
             return frameR
-        # Draw top matches
-        # imMatches = cv.drawMatches(
-        #     frameL, keypointsL, frameR, keypointsR, matches, None)
-        # cv.imwrite("matches.jpg", imMatches)
-        # cv.imshow('imMatches', imMatches)
         # Extract location of good matches
         pointsL = np.zeros((len(matches), 2), dtype=np.float32)
         pointsR = np.zeros((len(matches), 2), dtype=np.float32)

@@ -26,14 +26,14 @@ def processFrames(frameL, frameR, retL, retR, procParams):
     frame: numpy.ndarray
         The processed frame
     """
+    # Define a notFound image
+    notFoundImage = cv.imread('notFound.png', cv.IMREAD_COLOR)
+    # Retrieve camera frames (and check if they are valid)
+    frameL = frameL if retL else notFoundImage
+    frameR = frameR if retR else notFoundImage
     try:
-        # Define a notFound image
-        notFoundImage = cv.imread('notFound.png', cv.IMREAD_COLOR)
-        # Retrieve camera frames (and check if they are valid)
-        frameL = frameL if retL else notFoundImage
-        frameR = frameR if retR else notFoundImage
         # Align images (if both are retrieved, align them, otherwise, return the notFound image)
-        frameLReg = alignImages(frameL, frameR) if (retL and retR) else notFoundImage
+        frameLReg = alignImages(frameL, frameR)
         # Frames Subtraction
         frame = cv.subtract(frameLReg, frameR)
         # Post-processing
@@ -44,3 +44,4 @@ def processFrames(frameL, frameR, retL, retR, procParams):
         return frame
     except Exception as exception:
         logger(f'Running failed!\n{exception}', 'error')
+        return imageConcatHorizontal([frameR, frameL, notFoundImage])
