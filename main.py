@@ -41,7 +41,7 @@ def main():
         # Retrieve frames
         # Note: if each of the cameras not working, retX will be False
         retL, frameL = capL.read()
-        retR, frameR = capR.read()        
+        retR, frameR = capR.read()
         # Get the values from the GUI
         guiValues = {'maxFeatures': values['MaxFeat'], 'goodMatchPercentage': values['MatchRate'],
                     'circlularMaskCoverage': values['CircMask'], 'threshold': values['Threshold'],

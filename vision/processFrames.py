@@ -34,14 +34,17 @@ def processFrames(frameL, frameR, retL, retR, procParams):
     try:
         # Align images (if both are retrieved, align them, otherwise, return the notFound image)
         frameLReg = alignImages(frameL, frameR)
+        frameRReg = alignImages(frameR, frameL)
         # Frames Subtraction
-        frame = cv.subtract(frameLReg, frameR)
+        frameLR = cv.subtract(frameLReg, frameR)
+        frameRL = cv.subtract(frameRReg, frameL)
         # Post-processing
-        frame = postProcessing(frame, procParams)
+        frameLR = postProcessing(frameLR, procParams)
+        frameRL = postProcessing(frameRL, procParams)
         # Concatenate frames
-        frame = imageConcatHorizontal([frameR, frameL, frame])
+        frame = imageConcatHorizontal([frameR, frameL, frameLR, frameRL])
         # Return the frame to be shown in a window
         return frame
     except Exception as exception:
         logger(f'Running failed!\n{exception}', 'error')
-        return imageConcatHorizontal([frameR, frameL, notFoundImage])
+        return imageConcatHorizontal([frameR, frameL, notFoundImage, notFoundImage])

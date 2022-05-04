@@ -4,25 +4,25 @@ from utils.logger import logger
 from config import maxFeatures, goodMatchPercentage
 
 
-def alignImages(frameL, frameR):
+def alignImages(frame1, frame2):
     """
     Aligns two images using ORB features and descriptors.
 
     Parameters
     ----------
-    frameL: numpy.ndarray
+    frame1: numpy.ndarray
         Frame obtained from the left camera
-    frameR: numpy.ndarray
+    frame2: numpy.ndarray
         Frame obtained from the right camera
     """
     try:
         # Convert images to grayscale
-        frameRGray = cv.cvtColor(frameR, cv.COLOR_BGR2GRAY)
-        frameLGray = cv.cvtColor(frameL, cv.COLOR_BGR2GRAY)
+        frame2Gray = cv.cvtColor(frame2, cv.COLOR_BGR2GRAY)
+        frame1Gray = cv.cvtColor(frame1, cv.COLOR_BGR2GRAY)
         # Detect ORB features and compute descriptors
         orb = cv.ORB_create(maxFeatures)
-        keypointsL, descriptorsL = orb.detectAndCompute(frameLGray, None)
-        keypointsR, descriptorsR = orb.detectAndCompute(frameRGray, None)
+        keypointsL, descriptorsL = orb.detectAndCompute(frame1Gray, None)
+        keypointsR, descriptorsR = orb.detectAndCompute(frame2Gray, None)
         # Match features
         descriptorMatcher = cv.DescriptorMatcher_create(
             cv.DESCRIPTOR_MATCHER_BRUTEFORCE_HAMMING)
@@ -35,7 +35,7 @@ def alignImages(frameL, frameR):
         matches = matches[:bestMatchesLength]
         # When there are no matches, return the original frame
         if (matches == []):
-            return frameR
+            return frame2
         # Extract location of good matches
         pointsL = np.zeros((len(matches), 2), dtype=np.float32)
         pointsR = np.zeros((len(matches), 2), dtype=np.float32)
@@ -48,11 +48,11 @@ def alignImages(frameL, frameR):
         # To avoid error when there are no matches
         # assert homography != None, 'No homography found!'
         if (homography is None):
-            return frameL
-        height, width = frameR.shape[:2]
+            return frame1
+        height, width = frame2.shape[:2]
         # Create registered image for left camera frame
-        frameLReg = cv.warpPerspective(
-            frameL, homography, (width, height))
-        return frameLReg
+        frame1Reg = cv.warpPerspective(
+            frame1, homography, (width, height))
+        return frame1Reg
     except Exception as exception:
         logger(f'Error occurred in alignImages!\n{exception}', 'error')
