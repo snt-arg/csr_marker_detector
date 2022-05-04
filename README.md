@@ -21,8 +21,6 @@ pip install -r requirements.txt
 
 ### 📝 TODOs
 
-- Adding support for when the camera is not detected
 - Adding GPU acceleration
-- Storing both subtraction matrices
 - Do a both-side subtraction operation
 - For the image hardware, we can use the current set up equipped with a wide-range lens
