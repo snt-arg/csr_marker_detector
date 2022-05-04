@@ -1,0 +1,24 @@
+import cv2 as cv
+
+offset = 10
+textColor = (255, 255, 255)
+textFont = cv.FONT_HERSHEY_PLAIN
+
+def addLabel(concatedFrame):
+    """
+    Adds a label to the concatenated frame.
+
+    Parameters
+    ----------
+    concatedFrame: numpy.ndarray
+        Concatenated frame.
+    """
+    # Claculate locations
+    height, width, _ = concatedFrame.shape
+    xLocation = int(width / 4)
+    yLocation = height - offset
+    # Add labels
+    cv.putText(concatedFrame, "CameraR", (offset, yLocation), textFont, 0.7, textColor, 1)
+    cv.putText(concatedFrame, "CameraL", (xLocation + offset, yLocation), textFont, 0.7, textColor, 1)
+    cv.putText(concatedFrame, "Mat. L-R", ((xLocation * 2) + offset, yLocation), textFont, 0.7, textColor, 1)
+    cv.putText(concatedFrame, "Mat. R-L", ((xLocation * 3) + offset, yLocation), textFont, 0.7, textColor, 1)

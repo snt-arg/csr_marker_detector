@@ -2,6 +2,7 @@ import logging
 import cv2 as cv
 import PySimpleGUI as sg
 from utils.logger import logger
+from vision.addLabel import addLabel
 from vision.processFrames import processFrames
 from config import ports, brightness, labelSize, sliderSize
 from config import threshold, erodeKernelSize, gaussianBlurKernelSize
@@ -53,6 +54,8 @@ def main():
         frameR = cv.flip(frameR, 1)
         # Process frames
         frame = processFrames(frameL, frameR, retL, retR, guiValues)
+        # Add text to the image
+        addLabel(frame)
         # Show the frames
         frame = cv.imencode(".png", frame)[1].tobytes()
         window['Frames'].update(data=frame)

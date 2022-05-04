@@ -1,3 +1,4 @@
+from . import addLabel
 from . import filterROI
 from . import alignImages
 from . import concatImages
