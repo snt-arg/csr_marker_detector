@@ -55,7 +55,7 @@ def main():
         # Process frames
         frame = processFrames(frameL, frameR, retL, retR, guiValues)
         # Add text to the image
-        addLabel(frame)
+        addLabel(frame, 5)
         # Show the frames
         frame = cv.imencode(".png", frame)[1].tobytes()
         window['Frames'].update(data=frame)
