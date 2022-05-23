@@ -41,8 +41,9 @@ def processFrames(frameL, frameR, retL, retR, procParams):
         # Post-processing
         frameLR = postProcessing(frameLR, procParams)
         frameRL = postProcessing(frameRL, procParams)
+        frameOR = frameLR + frameRL
         # Concatenate frames
-        frame = imageConcatHorizontal([frameR, frameL, frameLR, frameRL])
+        frame = imageConcatHorizontal([frameR, frameL, frameLR, frameRL, frameOR])
         # Return the frame to be shown in a window
         return frame
     except Exception as exception:
