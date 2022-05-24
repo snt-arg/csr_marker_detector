@@ -27,6 +27,16 @@ def frameResize(image, width=200):
         image, (width, int(width / aspectRatio)), interpolation=cv.INTER_AREA)
     return scaledImage
 
+def concatTile(imageList2d):
+    """
+    Concatenates a list of images horizontally and vertically.
+
+    Parameters
+    ----------
+    imageList2d: list
+        List of images to concatenate.
+    """
+    return cv.vconcat([cv.hconcat(imageList1d) for imageList1d in imageList2d])
 
 def imageConcatHorizontal(imageList):
     """
