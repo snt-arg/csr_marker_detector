@@ -19,8 +19,20 @@ You can also run the command below in the root directory to get all of them inst
 pip install -r requirements.txt
 ```
 
+### ℹ️ Versions
+
+- Version 0.2 (May 2022):
+    - Added GUI for simpler configuration
+    - Added both-side subtraction to cover all differences
+    - Added camera setting configuration
+- Version 0.1 (January 2022):
+    - A simple image difference detector
+    - An image alignment module
+    - A post-processing module
+    - An obstacle filtration module
+
 ### 📝 TODOs
 
 - Adding GPU acceleration
-- Do a both-side subtraction operation
-- For the image hardware, we can use the current set up equipped with a wide-range lens
+- Read camera from ROS
+- Add a ArUco tag detector/interpereter
