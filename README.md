@@ -33,6 +33,9 @@ pip install -r requirements.txt
 
 ### 📝 TODOs
 
-- Adding GPU acceleration
-- Read camera from ROS
+- Read camera outputs from ROS
 - Add a ArUco tag detector/interpereter
+- Add Realsense cameras reader/feeder
+- Enhanse the image alignment using rs-align (https://github.com/IntelRealSense/librealsense/tree/master/examples/align)
+    - Consider adding the RGB output to the IR output for a better depth understanding
+- Add ROS wrapper for Realsense (https://github.com/IntelRealSense/realsense-ros)
