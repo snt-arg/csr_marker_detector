@@ -37,7 +37,7 @@ def arUcoMarkerGenerator(id=0, dictType='DICT_ARUCO_ORIGINAL', size=250, outputP
         # Save the marker to the output folder
         fileName = f'ArUco#{dictType}#{"{0:05d}".format(id)}.png'
         print(f"Saving the generated marker {fileName} ...")
-        cv.imwrite(os.path.join(outputPath, fileName), tag)
+        cv.imwrite(os.path.join(fileName), tag)
         cv.imshow(fileName, tag)
         cv.waitKey(0)
     except Exception as exception:

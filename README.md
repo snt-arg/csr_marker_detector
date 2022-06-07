@@ -25,6 +25,7 @@ pip install -r requirements.txt
     - Added GUI for simpler configuration
     - Added both-side subtraction to cover all differences
     - Added camera setting configuration
+    - Added ArUco marker detector
 - Version 0.1 (January 2022):
     - A simple image difference detector
     - An image alignment module
