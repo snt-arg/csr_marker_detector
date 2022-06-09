@@ -27,8 +27,12 @@ tabPosProcessing = [
     [sg.Text('Threshold:', size=labelSize), sg.Slider((1, 255), threshold, 1, orientation="h", size=sliderSize, key="Threshold")],
     [sg.Text('Erosion kernel:', size=labelSize), sg.Slider((1, 50), erodeKernelSize, 1, orientation="h", size=sliderSize, key="Erosion")],
     [sg.Text('Gaussian kernel:', size=labelSize), sg.Slider((1, 49), gaussianBlurKernelSize, 2, orientation="h", size=sliderSize, key="Gaussian")]]
+tabMarkerDetection = [
+    [sg.Text('Threshold:', size=labelSize), sg.Slider((1, 255), threshold, 1, orientation="h", size=sliderSize, key="Threshold")],
+    [sg.Text('Erosion kernel:', size=labelSize), sg.Slider((1, 50), erodeKernelSize, 1, orientation="h", size=sliderSize, key="Erosion")],
+    [sg.Text('Gaussian kernel:', size=labelSize), sg.Slider((1, 49), gaussianBlurKernelSize, 2, orientation="h", size=sliderSize, key="Gaussian")]]
 tabGroup = [[sg.Image(filename="./logo.png",  key="LogoHolder"), sg.TabGroup([[sg.Tab('General Settings', tabGeneral), sg.Tab('Alignment Configurations', tabAlignment),
-                    sg.Tab('Post-Processing', tabPosProcessing)]], tab_location='centertop', expand_x=True,
+                    sg.Tab('Post-Processing', tabPosProcessing), sg.Tab('Marker Detection', tabMarkerDetection)]], tab_location='centertop', expand_x=True,
                        title_color='dark slate grey', selected_background_color='dark orange', pad=10)]]
 imageViewer = [sg.Image(filename="", key="Frames")]
 

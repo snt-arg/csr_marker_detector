@@ -1,9 +1,8 @@
 import os
 import cv2 as cv
 import numpy as np
-from utils.arUcoUtils import arUcoDictionary
-
-defaultGenPath = 'generated'
+from config import defaultGenPath
+from markers.arUcoUtils import arUcoDictionary
 
 def markerGenerator(id=0, dictType='DICT_ARUCO_ORIGINAL', size=250, outputPath=defaultGenPath):
     """
@@ -35,12 +34,10 @@ def markerGenerator(id=0, dictType='DICT_ARUCO_ORIGINAL', size=250, outputPath=d
         tag = np.zeros((size, size, 1), dtype=np.uint8)
         cv.aruco.drawMarker(selectedDict, id, size, tag, 1)
         # Save the marker to the output folder
-        fileName = f'ArUco#{dictType}#{"{0:05d}".format(id)}.png'
+        fileName = f'ArUco#{dictType}#{"{0:05d}".format(id)}#{size}.png'
         print(f"Saving the generated marker {fileName} ...")
-        cv.imwrite(os.path.join(fileName), tag)
+        cv.imwrite(os.path.join(outputPath, fileName), tag)
         cv.imshow(fileName, tag)
         cv.waitKey(0)
     except Exception as exception:
         print(f'Error occurred when generating the arUco marker!\n{exception}', 'error')
-
-markerGenerator(10, 'DICT_ARUCO_ORIGINAL')

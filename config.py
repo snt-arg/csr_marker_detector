@@ -20,3 +20,9 @@ circlularMaskCoverage = 0.8  # Value between 0 and 1
 threshold = 10  # Value between 0 and 255
 erodeKernelSize = 9  # Value between 1 and 50
 gaussianBlurKernelSize = 5  # Only odd values
+
+# Marker detection initialize values
+markerId = 0
+markerSize = 250
+markerDictType = 'DICT_ARUCO_ORIGINAL'
+defaultGenPath = './markers/generated/'

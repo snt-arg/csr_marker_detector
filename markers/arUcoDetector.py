@@ -1,5 +1,5 @@
 import cv2 as cv
-from utils.arUcoUtils import arUcoDictionary
+from markers.arUcoUtils import arUcoDictionary
 
 def markerDetector(imageAddress, dictType='DICT_ARUCO_ORIGINAL'):
     try:
