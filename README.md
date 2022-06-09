@@ -21,6 +21,8 @@ pip install -r requirements.txt
 
 ### ℹ️ Versions
 
+- Version 0.3 (June 2022):
+    - Added ArUco Marker generator to UI
 - Version 0.2 (May 2022):
     - Added GUI for simpler configuration
     - Added both-side subtraction to cover all differences
