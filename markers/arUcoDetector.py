@@ -1,7 +1,7 @@
 import cv2 as cv
 from utils.arUcoUtils import arUcoDictionary
 
-def arUcoMarkerDetector(imageAddress, dictType='DICT_ARUCO_ORIGINAL'):
+def markerDetector(imageAddress, dictType='DICT_ARUCO_ORIGINAL'):
     try:
         # Read the image
         image = cv.imread(imageAddress)
@@ -45,6 +45,6 @@ def arUcoMarkerDetector(imageAddress, dictType='DICT_ARUCO_ORIGINAL'):
     except Exception as exception:
         print(f'Error occurred when detecting the arUco marker!\n{exception}', 'error')
 
-arUcoMarkerDetector('board.png', 'DICT_ARUCO_ORIGINAL')
+markerDetector('board.png', 'DICT_ARUCO_ORIGINAL')
 
 # https://pyimagesearch.com/2020/12/21/detecting-aruco-markers-with-opencv-and-python/

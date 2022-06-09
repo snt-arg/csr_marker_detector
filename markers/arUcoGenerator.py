@@ -5,7 +5,7 @@ from utils.arUcoUtils import arUcoDictionary
 
 defaultGenPath = 'generated'
 
-def arUcoMarkerGenerator(id=0, dictType='DICT_ARUCO_ORIGINAL', size=250, outputPath=defaultGenPath):
+def markerGenerator(id=0, dictType='DICT_ARUCO_ORIGINAL', size=250, outputPath=defaultGenPath):
     """
     Generates a marker for ARUCO.
 
@@ -43,4 +43,4 @@ def arUcoMarkerGenerator(id=0, dictType='DICT_ARUCO_ORIGINAL', size=250, outputP
     except Exception as exception:
         print(f'Error occurred when generating the arUco marker!\n{exception}', 'error')
 
-arUcoMarkerGenerator(10, 'DICT_ARUCO_ORIGINAL')
+markerGenerator(10, 'DICT_ARUCO_ORIGINAL')

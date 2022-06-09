@@ -1,2 +1,2 @@
-from . import arUcoMarkerDetector
-from . import arUcoMarkerGenerator
+from . import arUcoDetector
+from . import arUcoGenerator
