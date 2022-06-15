@@ -75,12 +75,14 @@ def main():
             guiValues = {'maxFeatures': values['MaxFeat'], 'goodMatchPercentage': values['MatchRate'],
                         'circlularMaskCoverage': values['CircMask'], 'threshold': values['Threshold'],
                         'erosionKernel': values['Erosion'], 'gaussianKernel': values['Gaussian']}
+            # Convert images to grayscale
+            retL = cv.cvtColor(retL, cv.COLOR_GRAY2RGB)
+            retR = cv.cvtColor(retR, cv.COLOR_GRAY2RGB)
             # Change brightness
             retL = cv.convertScaleAbs(retL, alpha=values['camAlpha'], beta=values['camBeta'])
             retR = cv.convertScaleAbs(retR, alpha=values['camAlpha'], beta=values['camBeta'])
             # Process frames
             frame = processFrames(retL, retR, True, True, guiValues)
-            # frame = np.hstack((retL, retR))
             # Add text to the image
             addLabel(frame, 5)
             # Show the frames
