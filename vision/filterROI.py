@@ -1,9 +1,8 @@
 import cv2 as cv
 import numpy as np
-from config import circlularMaskCoverage
 
 
-def applyCircularMask(image):
+def applyCircularMask(image, coverage: float):
     """
     Filters a region of interest from an image based on config.py.
 
@@ -21,8 +20,8 @@ def applyCircularMask(image):
     frameHeight, frameWidth = image.shape[:2]
     centerX, centerY = frameWidth // 2, frameHeight // 2
     # Define the circle
-    radius = int(centerY * circlularMaskCoverage) if frameHeight < frameWidth else int(
-        centerX * circlularMaskCoverage)
+    radius = int(centerY * coverage) if frameHeight < frameWidth else int(
+        centerX * coverage)
     # Create a blank image of the same size as the original image
     mask = np.zeros_like(image)
     mask = cv.circle(mask, (centerX, centerY), radius, (255, 255, 255), -1)
