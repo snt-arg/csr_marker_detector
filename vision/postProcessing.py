@@ -28,7 +28,8 @@ def postProcessing(frame, procParams):
         _, mask = cv.threshold(frameGray, procParams['threshold'], 255,
                                cv.THRESH_BINARY + cv.THRESH_OTSU)
         # Apply region of interest
-        mask = applyCircularMask(mask, procParams['circlularMaskCoverage'])
+        if (procParams['enableCircularMask']):
+            mask = applyCircularMask(mask, procParams['circlularMaskCoverage'])
         # Apply morphological operations
         erodeKernel = cv.getStructuringElement(
             cv.MORPH_RECT, (int(procParams['erosionKernel']), int(procParams['erosionKernel'])))

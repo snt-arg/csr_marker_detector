@@ -9,7 +9,7 @@ from markers.arUcoGenerator import markerGenerator
 from config import threshold, erodeKernelSize, gaussianBlurKernelSize
 from config import ports, fpsBoost, brightness, labelSize, sliderSize
 from config import markerId, markerSize, markerDictType, defaultGenPath
-from config import maxFeatures, goodMatchPercentage, circlularMaskCoverage, flipImage
+from config import maxFeatures, goodMatchPercentage, circlularMaskCoverage, flipImage, enableCircularROI
 
 def fpsGetter(newFps):
     return newFps
@@ -23,7 +23,8 @@ tabGeneral = [[sg.Text('Frame-rate:', size=labelSize), sg.Text(str(fps) + f' fps
 tabAlignment = [
     [sg.Text('Max. features:', size=labelSize), sg.Slider((10, 1000), maxFeatures, 10, orientation="h", size=sliderSize, key="MaxFeat")],
     [sg.Text('Matching rate:', size=labelSize), sg.Slider((0, 1), goodMatchPercentage, .1, orientation="h", size=sliderSize, key="MatchRate")],
-    [sg.Text('Circular mask:', size=labelSize), sg.Slider((0, 1), circlularMaskCoverage, .01, orientation="h", size=sliderSize, key="CircMask")]]
+    [sg.Text('Circular mask:', size=labelSize), sg.Slider((0, 1), circlularMaskCoverage, .01, orientation="h", size=sliderSize, key="CircMask"),
+    sg.Checkbox('Enable Circular Mask', default=enableCircularROI, key="CircMaskEnable")]]
 tabPosProcessing = [
     [sg.Text('Threshold:', size=labelSize), sg.Slider((1, 255), threshold, 1, orientation="h", size=sliderSize, key="Threshold")],
     [sg.Text('Erosion kernel:', size=labelSize), sg.Slider((1, 50), erodeKernelSize, 1, orientation="h", size=sliderSize, key="Erosion")],
@@ -66,6 +67,7 @@ def main():
         guiValues = {'maxFeatures': values['MaxFeat'], 'goodMatchPercentage': values['MatchRate'],
                     'circlularMaskCoverage': values['CircMask'], 'threshold': values['Threshold'],
                     'erosionKernel': values['Erosion'], 'gaussianKernel': values['Gaussian'],
+                    'enableCircularMask': values['CircMaskEnable'],
                     }
         # Check for any button presses
         if event == 'Generate':
