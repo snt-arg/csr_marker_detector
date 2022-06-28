@@ -9,7 +9,7 @@ from markers.arUcoGenerator import markerGenerator
 from config import threshold, erodeKernelSize, gaussianBlurKernelSize
 from config import ports, fpsBoost, brightness, labelSize, sliderSize
 from config import markerId, markerSize, markerDictType, defaultGenPath
-from config import maxFeatures, goodMatchPercentage, circlularMaskCoverage
+from config import maxFeatures, goodMatchPercentage, circlularMaskCoverage, flipImage
 
 def fpsGetter(newFps):
     return newFps
@@ -74,7 +74,8 @@ def main():
         frameL = cv.convertScaleAbs(frameL, alpha=values['camAlpha'], beta=values['camBeta'])
         frameR = cv.convertScaleAbs(frameR, alpha=values['camAlpha'], beta=values['camBeta'])
         # Flip the right frame
-        frameR = cv.flip(frameR, 1)
+        if (flipImage):
+            frameR = cv.flip(frameR, 1)
         # Process frames
         frame = processFrames(frameL, frameR, retL, retR, guiValues)
         # Add text to the image
