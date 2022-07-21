@@ -7,7 +7,7 @@ sliderSize = (100, 15)
 # Shown window
 windowWidth = 1800
 # Camera ports (0 for internal webcam)
-ports = {'lCam': 1, 'rCam': 2}
+ports = {'lCam': 2, 'rCam': 4}
 # Values for the left and the right camera
 brightness = {'alpha': 1.0, 'beta': 0}
 
@@ -15,8 +15,8 @@ brightness = {'alpha': 1.0, 'beta': 0}
 maxFeatures = 500
 goodMatchPercentage = 0.4
 circlularMaskCoverage = 0.8  # Value between 0 and 1
-flipImage = False  # True for BeamSplitter, False for stereo-vision
-enableCircularROI = False  # True for BeamSplitter, False for stereo-vision
+flipImage = True  # True for BeamSplitter, False for stereo-vision
+enableCircularROI = True  # True for BeamSplitter, False for stereo-vision
 
 # Post-processing initialize values
 threshold = 10  # Value between 0 and 255
