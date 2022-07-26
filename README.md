@@ -21,14 +21,16 @@ pip install -r requirements.txt
 
 ### ℹ️ Versions
 
-- Version 0.3 (June 2022):
+- Version 0.3 (July 2022):
     - Added ArUco Marker generator to UI
     - More utils in the GUI
+    - ROS-OpenCV bridging support
 - Version 0.2 (May 2022):
     - Added GUI for simpler configuration
     - Added both-side subtraction to cover all differences
     - Added camera setting configuration
     - Added ArUco marker detector
+    - Added RealSense camera support
 - Version 0.1 (January 2022):
     - A simple image difference detector
     - An image alignment module
